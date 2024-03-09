@@ -7,6 +7,15 @@ body {
   height: 100vh;
 }
 
+html {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar {
+  display: none;
+}
+
 *,
 *::before,
 *::after {
