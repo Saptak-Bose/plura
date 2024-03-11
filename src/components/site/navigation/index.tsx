@@ -1,16 +1,13 @@
 import { ModeToggle } from "@/components/global/mode-toggle";
 import { UserButton } from "@clerk/nextjs";
-import { User } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
 
-type Props = {
-  user?: null | User;
-};
+type Props = {};
 
-export default function Navigation({ user }: Props) {
+export default function Navigation({}: Props) {
   return (
-    <div className="p-4 flex items-center justify-between relative">
+    <div className="p-4 flex items-center justify-between relative z-10">
       <aside className="flex items-center gap-2">
         <Image
           src="/assets/plura-logo.svg"
