@@ -41,7 +41,7 @@ export default async function AgencyPage({ searchParams }: Props) {
   return (
     <div className="flex justify-center items-center mt-4">
       <div className="max-w-[850px] border p-4 rounded-xl">
-        <h1 className="text-4xl">Create an Agency</h1>
+        <h1 className="text-4xl mb-2">Create an Agency</h1>
         <AgencyDetails
           data={{ companyEmail: authUser?.emailAddresses[0].emailAddress }}
         />
