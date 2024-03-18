@@ -8,15 +8,17 @@ type Props = {};
 export default function Navigation({}: Props) {
   return (
     <div className="p-4 flex items-center justify-between relative z-10">
-      <aside className="flex items-center gap-2">
-        <Image
-          src="/assets/plura-logo.svg"
-          width={40}
-          height={40}
-          alt="plura-logo"
-        />
-        <span className="text-xl font-bold">Plura.</span>
-      </aside>
+      <Link href="/">
+        <aside className="flex items-center gap-2">
+          <Image
+            src="/assets/plura-logo.svg"
+            width={40}
+            height={40}
+            alt="plura-logo"
+          />
+          <span className="text-xl font-bold">Plura.</span>
+        </aside>
+      </Link>
       <nav className="hidden md:block absolute left-[50%] top-[50%] transform translate-x-[-50%] translate-y-[-50%]">
         <ul className="flex items-center justify-center gap-8">
           <Link href="#">Pricing</Link>
@@ -32,7 +34,7 @@ export default function Navigation({}: Props) {
         >
           Login
         </Link>
-        <UserButton />
+        <UserButton afterSignOutUrl="/" />
         <ModeToggle />
       </aside>
     </div>
