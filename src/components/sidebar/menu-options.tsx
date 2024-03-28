@@ -28,6 +28,7 @@ import CustomModal from "../global/custom-modal";
 import SubAccountDetails from "../forms/subaccount-details";
 import { Separator } from "../ui/separator";
 import { icons } from "@/lib/constants";
+import { usePathname } from "next/navigation";
 
 type Props = {
   defaultOpen?: boolean;
@@ -50,6 +51,7 @@ export default function MenuOptions({
 }: Props) {
   const { setOpen } = useModal();
   const [isMounted, setIsMounted] = useState(false);
+  const pathname = usePathname();
   const openState = useMemo(
     () => (defaultOpen ? { open: true } : {}),
     [defaultOpen]
@@ -258,6 +260,7 @@ export default function MenuOptions({
                 <CommandEmpty>No Results Found...</CommandEmpty>
                 <CommandGroup className="overflow-visible">
                   {sidebarOpt.map((sidebarOption) => {
+                    const isActive = pathname === sidebarOption.link;
                     let val;
                     const result = icons.find(
                       (icon) => icon.value === sidebarOption.icon
@@ -278,6 +281,11 @@ export default function MenuOptions({
                         >
                           {val}
                           <span>{sidebarOption.name}</span>
+                          {isActive ? (
+                            <small className="text-[9px] bg-muted text-muted-foreground px-0.5 rounded-md font-[700]">
+                              ACTIVE
+                            </small>
+                          ) : null}
                         </Link>
                       </CommandItem>
                     );

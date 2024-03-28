@@ -35,7 +35,7 @@ export default function Home() {
           <div className="bottom-0 top-[50%] bg-gradient-to-t dark:from-background left-0 right-0 absolute z-10"></div>
         </div>
       </section>
-      <section className="flex justify-center items-center flex-col gap-4 md:!mt-20 mt-[-60px]">
+      <section id="pricing" className="flex justify-center items-center flex-col gap-4 md:!mt-20 mt-[-60px]">
         <h2 className="text-4xl text-center">Choose what fits you right</h2>
         <p className="text-muted-foreground text-center">
           Our straightforward pricing plans are tailored to meet your needs. If{" "}
