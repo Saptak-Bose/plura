@@ -25,7 +25,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useToast } from "@/components/ui/use-toast";
-import { deleteTeamUser, deleteUser, getUser } from "@/lib/queries";
+import { deleteUser, getUser, removeTeamUser } from "@/lib/queries";
 import { UsersWithAgencySubAccountPermissionsSidebarOptions } from "@/lib/types";
 import { Role } from "@prisma/client";
 import { ColumnDef } from "@tanstack/react-table";
@@ -195,8 +195,7 @@ function CellActions({ rowData }: Props) {
             <AlertDialogTrigger asChild>
               <DropdownMenuItem
                 className="flex gap-2"
-                // onClick={() => deleteTeamUser(rowData.id)}
-                onClick={() => {}}
+                onClick={() => removeTeamUser(rowData.id)}
               >
                 <Trash size={15} /> Remove User
               </DropdownMenuItem>

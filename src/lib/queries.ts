@@ -5,13 +5,12 @@ import { db } from "./db";
 import { redirect } from "next/navigation";
 import { Agency, Plan, Role, SubAccount, User } from "@prisma/client";
 import { v4 } from "uuid";
+import { CreateMediaType } from "./types";
 
 export const getAuthUsetDetails = async () => {
   const user = await currentUser();
 
-  if (!user) {
-    return;
-  }
+  if (!user) return;
 
   const userData = await db.user.findUnique({
     where: {
@@ -330,6 +329,11 @@ export const upsertSubAccount = async (subAccount: SubAccount) => {
       SidebarOption: {
         create: [
           {
+            name: "Dashboard",
+            icon: "category",
+            link: `/subaccount/${subAccount.id}`,
+          },
+          {
             name: "Launchpad",
             icon: "clipboardIcon",
             link: `/subaccount/${subAccount.id}/launchpad`,
@@ -363,11 +367,6 @@ export const upsertSubAccount = async (subAccount: SubAccount) => {
             name: "Contacts",
             icon: "person",
             link: `/subaccount/${subAccount.id}/contacts`,
-          },
-          {
-            name: "Dashboard",
-            icon: "category",
-            link: `/subaccount/${subAccount.id}`,
           },
         ],
       },
@@ -464,14 +463,30 @@ export const getUser = async (id: string) => {
   return user;
 };
 
-export const deleteTeamUser = async (id: string) => {
-  const response = await db.subAccount.delete({
-    where: {
-      id,
-    },
-  });
+export const removeTeamUser = async (userId: string) => {
+  try {
+    const permissions = await db.permissions.findMany({
+      where: {
+        User: {
+          id: userId,
+        },
+      },
+    });
 
-  return response;
+    if (!permissions || permissions.length === 0) return;
+
+    const response = await db.permissions.deleteMany({
+      where: {
+        User: {
+          id: userId,
+        },
+      },
+    });
+
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export const sendInvitation = async (
@@ -483,19 +498,31 @@ export const sendInvitation = async (
     data: { email, agencyId, role },
   });
 
-  try {
-    const invitation = await clerkClient.invitations.createInvitation({
-      emailAddress: email,
-      redirectUrl: process.env.NEXT_PUBLIC_URL,
-      publicMetadata: {
-        throughInvitation: true,
-        role,
-      },
-    });
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
+  return response;
+};
+
+export const getMedia = async (subAccountId: string) => {
+  const mediafiles = await db.subAccount.findUnique({
+    where: {
+      id: subAccountId,
+    },
+    include: { Media: true },
+  });
+
+  return mediafiles;
+};
+
+export const createMedia = async (
+  subAccountId: string,
+  mediaFile: CreateMediaType
+) => {
+  const response = await db.media.create({
+    data: {
+      link: mediaFile.link,
+      name: mediaFile.name,
+      subAccountId,
+    },
+  });
 
   return response;
 };

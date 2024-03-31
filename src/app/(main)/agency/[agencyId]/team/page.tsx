@@ -4,6 +4,7 @@ import { Plus } from "lucide-react";
 import { currentUser } from "@clerk/nextjs";
 import { columns } from "./columns";
 import SendInvitation from "@/components/forms/send-invitation";
+import { User } from "@clerk/nextjs/server";
 
 type Props = {
   params: { agencyId: string };
@@ -52,10 +53,17 @@ export default async function TeamPage({ params }: Props) {
           Add
         </>
       }
-      modalChildren={<SendInvitation agencyId={agencyDetails.id} />}
+      modalChildren={
+        <SendInvitation
+          userEmail={authUser?.emailAddresses[0].emailAddress!}
+          userFirstName={authUser?.firstName!}
+          userLastName={authUser?.lastName!}
+          agencyId={agencyDetails.id}
+        />
+      }
       filterValue="name"
       columns={columns}
       data={teamMembers}
-    ></DataTable>
+    />
   );
 }

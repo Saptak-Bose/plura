@@ -25,7 +25,7 @@ export default async function AgencyPage({ searchParams }: Props) {
         redirect(`/agency${agencyId}/billing?plan=${searchParams.plan}`);
 
       if (searchParams.state) {
-        const statePath = searchParams.state.split("__")[0];
+        const statePath = searchParams.state.split("___")[0];
         const stateAgencyId = searchParams.state.split("___")[1];
 
         if (!stateAgencyId) return <Unauthorized />;

@@ -336,7 +336,7 @@ export default function UserDetails({
             <Button disabled={form.formState.isSubmitting} type="submit">
               {form.formState.isSubmitting ? <Loading /> : "Save User Details"}
             </Button>
-            {userData?.role === "AGENCY_OWNER" ? (
+            {authUserData?.role === "AGENCY_OWNER" ? (
               <div>
                 <Separator className="my-4" />
                 <FormLabel>User Permissions</FormLabel>
